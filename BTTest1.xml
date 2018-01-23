@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<BehaviorTree name="BT_Test_1">
+    <ActiveSelector>
+        <Sequence> <!-- Attack the enemy if seen. -->
+            <Condition name="SeeEnemy"/>
+            <ActiveSelector>
+                <Sequence>
+                    <Condition name="EnemyInRange"/>
+                    <Repeater limit="3">
+                        <Action name="AttackEnemy"/>
+                    </Repeater>
+                </Sequence>
+                <Action name="MoveTowardsPlayer"/>
+            </ActiveSelector>
+        </Sequence>
+        
+        <Sequence> <!-- Search near last known position. -->
+            <Condition name="HaveLastKnownPosition"/>
+            <Action name="MoveToLastKnownPosition"/>
+            <Action name="LookAround"/>
+        </Sequence>
+        
+        <Sequence> <!-- Randomly search nearby. -->
+            <Action name="MoveToRandomPosition"/>
+            <Action name="LookAround"/>
+        </Sequence>
+    </ActiveSelector>
+</BehaviorTree>

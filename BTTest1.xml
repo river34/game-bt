@@ -3,27 +3,27 @@
 <BehaviorTree name="BT_Test_1">
     <ActiveSelector>
         <Sequence> <!-- Attack the enemy if seen. -->
-            <Condition name="SeeEnemy"/>
+            <Condition id="SeeEnemy"/>
             <ActiveSelector>
                 <Sequence>
-                    <Condition name="EnemyInRange"/>
+                    <Condition id="EnemyInRange"/>
                     <Repeater limit="3">
-                        <Action name="AttackEnemy"/>
+                        <Action id="AttackEnemy"/>
                     </Repeater>
                 </Sequence>
-                <Action name="MoveTowardsPlayer"/>
+                <Action id="MoveTowardsPlayer"/>
             </ActiveSelector>
         </Sequence>
         
         <Sequence> <!-- Search near last known position. -->
-            <Condition name="HaveLastKnownPosition"/>
-            <Action name="MoveToLastKnownPosition"/>
-            <Action name="LookAround"/>
+            <Condition id="HaveLastKnownPosition"/>
+            <Action id="MoveToLastKnownPosition"/>
+            <Action id="LookAround"/>
         </Sequence>
         
         <Sequence> <!-- Randomly search nearby. -->
-            <Action name="MoveToRandomPosition"/>
-            <Action name="LookAround"/>
+            <Action id="MoveToRandomPosition"/>
+            <Action id="LookAround"/>
         </Sequence>
     </ActiveSelector>
 </BehaviorTree>

@@ -21,8 +21,10 @@ namespace BT
         Behavior* m_pChild;
         
     public:
-        Decorator() { m_sName = "Decorator"; }
-        Decorator(Behavior* _child) : m_pChild(_child) { m_sName = "Decorator"; }
+        Decorator() : Behavior("Decorator") { }
+		Decorator(const std::string& _name) : Behavior(_name) { }
+        Decorator(Behavior* _child, const std::string& _name) : Behavior(_name), m_pChild(_child) { }
+		Decorator(Behavior* _child) : Behavior("Decorator"), m_pChild(_child) { }
         virtual ~Decorator() { }
         inline void setChild(Behavior* _child) { m_pChild = _child; }
         inline static Behavior* create() { return new Decorator; }

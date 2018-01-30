@@ -12,7 +12,9 @@
 #include "Status.hpp"
 #include <map>
 #include <string>
+#include <iostream>
 
+class Blackboard;
 namespace BT
 {
     class Behavior
@@ -26,14 +28,17 @@ namespace BT
         typedef Behavior* (*createInstanceFn) (const BehaviorParams&);
         
     public:
-        Behavior() : m_eStatus(Status::BH_INVALID) { m_sName = "Behavior"; }
+        Behavior() : m_eStatus(Status::BH_INVALID), m_sName("Behavior") { }
+		Behavior(const std::string& _name) : m_eStatus(Status::BH_INVALID), m_sName(_name) { }
         virtual ~Behavior() { m_eStatus = Status::BH_INVALID; }
-        Status tick() /* single entry point for updating this behavior */
+        Status tick(Blackboard* _blackboard) /* single entry point for updating this behavior */
         {
+			std::cout << "tick " << m_sName << std::endl;
+
             if (m_eStatus == Status::BH_INVALID)
-                onInitialize();
+                onInitialize(_blackboard);
             
-            onUpdate();
+            onUpdate(_blackboard);
             
             if (m_eStatus != Status::BH_RUNNING)
                 onTerminate(m_eStatus);
@@ -44,8 +49,8 @@ namespace BT
         inline bool isTerminated() const { return m_eStatus == Status::BH_SUCCESS || m_eStatus == Status::BH_FAILURE; } /* success or failed */
         inline void reset() { m_eStatus = Status::BH_INVALID; }
         inline void abort() { onTerminate(Status::BH_ABORTED); m_eStatus = Status::BH_ABORTED; }
-        inline virtual void onInitialize() { }
-        inline virtual Status onUpdate() { return m_eStatus; }
+        inline virtual void onInitialize(Blackboard* _blackboard) { }
+        inline virtual Status onUpdate(Blackboard* _blackboard) { return m_eStatus; }
         inline virtual void onTerminate(Status _status) { }
         inline std::string getName() { return m_sName; }
         inline static Behavior* create(const BehaviorParams& _params) { return new Behavior; }

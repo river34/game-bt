@@ -18,7 +18,8 @@ namespace BT
     class Filter : public Sequence
     {
     public:
-        Filter() { m_sName = "Filter"; }
+		Filter() : Sequence("Filter") { }
+		Filter(const std::string& _name) : Sequence(_name) { }
         virtual ~Filter() { }
         inline void addCondition(Behavior* condition) { m_Children.insert(m_Children.begin(), condition); }
         inline void addAction(Behavior* action) { m_Children.push_back(action); }

@@ -26,18 +26,21 @@ namespace BT
         unsigned int m_iLimit;
         
     public:
-        Repeater() { m_sName = "Repeater"; }
-        Repeater(unsigned int _limit) : m_iLimit(_limit) { m_sName = "Repeater"; }
-        Repeater(Behavior* _child, unsigned int _limit) : Decorator(_child), m_iLimit(_limit) { }
+		Repeater() : Decorator("Repeater") { }
+		Repeater(const std::string& _name) : Decorator(_name) { }
+		Repeater(unsigned int _limit, const std::string& _name) : Decorator(_name), m_iLimit(_limit) { }
+		Repeater(unsigned int _limit) : Decorator("Repeater"), m_iLimit(_limit) { }
+        Repeater(Behavior* _child, unsigned int _limit, const std::string& _name) : Decorator(_child, _name), m_iLimit(_limit) { }
+		Repeater(Behavior* _child, unsigned int _limit) : Decorator(_child, "Repeater"), m_iLimit(_limit) { }
         virtual ~Repeater() { }
         inline void onInitialize() { m_iCounter = 0; }
         inline void setLimit(unsigned int _limit) { m_iLimit = _limit; }
         inline void setChild(Behavior* _child) { m_pChild = _child; }
-        Status onUpdate()
+        Status onUpdate(Blackboard* _blackboard)
         {
             for (;;)
             {
-                m_pChild->tick();
+                m_pChild->tick(_blackboard);
                 if (m_pChild->getStatus() == Status::BH_RUNNING) break;
                 if (m_pChild->getStatus() == Status::BH_FAILURE) return Status::BH_FAILURE;
                 if (++m_iCounter == m_iLimit) return Status::BH_SUCCESS;
@@ -47,18 +50,14 @@ namespace BT
         }
         inline static Behavior* create(const BehaviorParams& _params)
         {
+			unsigned int limit = 1;
             auto it = _params.find("limit");
             if (it != _params.end())
             {
                 std::stringstream s(it->second);
-                unsigned int limit = 0;
                 s >> limit;
-                return new Repeater(limit);
             }
-            else
-            {
-                return new Repeater;
-            }
+			return new Repeater(limit);
         }
     };
 }

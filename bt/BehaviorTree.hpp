@@ -25,19 +25,19 @@ namespace BT
             m_Behaviors.push_front(&bh);
         }
         
-        void tick()
+        void tick(Blackboard* _blackboard)
         {
             // Insert an end-of-update marker into the list of tasks.
             m_Behaviors.push_back(nullptr);
             
             // Keep going updating tasks until we encounter the marker.
-            while (step())
+            while (step(_blackboard))
             {
                 continue;
             }
         }
         
-        bool step()
+        bool step(Blackboard* _blackboard)
         {
             Behavior* current = m_Behaviors.front();
             m_Behaviors.pop_front();
@@ -49,7 +49,7 @@ namespace BT
             }
             
             // Perform the update on this individual task.
-            current->tick();
+            current->tick(_blackboard);
             
             // drop it into the queue for the next tick().
             if (current->getStatus() == Status::BH_RUNNING)

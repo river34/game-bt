@@ -6,21 +6,15 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef BehaviorFactory_h
-#define BehaviorFactory_h
+#ifndef BehaviorFactory_hpp
+#define BehaviorFactory_hpp
 
 #include <tuple>
 #include <iostream>
 #include <string>
 #include <map>
 #include "Behavior.hpp"
-#include "Decorator.hpp"
-#include "Repeater.hpp"
-#include "Sequence.hpp"
-#include "Filter.hpp"
-#include "ActiveSelector.hpp"
-#include "Parallel.hpp"
-#include "rapidxml/rapidxml.hpp"
+#include "../rapidxml/rapidxml.hpp"
 
 namespace BT
 {
@@ -33,14 +27,8 @@ namespace BT
         FactoryMap m_FactoryMap;
         
     public:
-        BehaviorFactory()
-        {
-            registerClass("Repeater", &Repeater::create);
-            registerClass("Sequence", &Sequence::create);
-            registerClass("ActiveSelector", &ActiveSelector::create);
-            registerClass("Condition", &Filter::create);
-        }
-        ~BehaviorFactory() { }
+        BehaviorFactory() { }
+        ~BehaviorFactory() { m_FactoryMap.clear(); }
         void registerClass(const std::string& name, Behavior::createInstanceFn pfnCreate)
         {
             m_FactoryMap[name] = pfnCreate;
@@ -48,13 +36,18 @@ namespace BT
         Behavior* createInstance(const rapidxml::xml_node<>* node)
         {
             FactoryMap::iterator it = m_FactoryMap.find(node->name());
+            Behavior::BehaviorParams params = Behavior::BehaviorParams();
+            for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
+                if (strcmp(attr->name(), "name")) continue;
+                params[attr->name()] = attr->value();
+            }
             if (it != m_FactoryMap.end())
             {
-                return it->second();
+                return it->second(params);
             }
             return nullptr;
         }
     };
 }
 
-#endif /* BehaviorFactory_h */
+#endif /* BehaviorFactory_hpp */

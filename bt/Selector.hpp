@@ -9,8 +9,8 @@
 //      until it finds a child that either succeeds or keeps running.
 // 
 
-#ifndef Selector_h
-#define Selector_h
+#ifndef Selector_hpp
+#define Selector_hpp
 
 #include "Composite.hpp"
 
@@ -19,6 +19,7 @@ namespace BT
     class Selector : public Composite
     {
     public:
+        Selector() { m_sName = "Selector"; }
         virtual ~Selector() { }
         virtual Status onUpdate() override
         {
@@ -36,4 +37,4 @@ namespace BT
 }
 
 
-#endif /* Selector_h */
+#endif /* Selector_hpp */

@@ -6,10 +6,12 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef Behavior_h
-#define Behavior_h
+#ifndef Behavior_hpp
+#define Behavior_hpp
 
 #include "Status.hpp"
+#include <map>
+#include <string>
 
 namespace BT
 {
@@ -17,9 +19,14 @@ namespace BT
     {
     protected:
         Status m_eStatus;
+        std::string m_sName;
         
     public:
-        Behavior() : m_eStatus(Status::BH_INVALID) { }
+        typedef std::map<std::string, std::string> BehaviorParams;
+        typedef Behavior* (*createInstanceFn) (const BehaviorParams&);
+        
+    public:
+        Behavior() : m_eStatus(Status::BH_INVALID) { m_sName = "Behavior"; }
         virtual ~Behavior() { m_eStatus = Status::BH_INVALID; }
         Status tick() /* single entry point for updating this behavior */
         {
@@ -40,7 +47,9 @@ namespace BT
         inline virtual void onInitialize() { }
         inline virtual Status onUpdate() { return m_eStatus; }
         inline virtual void onTerminate(Status _status) { }
+        inline std::string getName() { return m_sName; }
+        inline static Behavior* create(const BehaviorParams& _params) { return new Behavior; }
     };
 }
 
-#endif /* Behavior_h */
+#endif /* Behavior_hpp */

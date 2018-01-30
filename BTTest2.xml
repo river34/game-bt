@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+
+<BehaviorTree name="BT_Test_2">
+    <ActiveSelector>
+        <Sequence> <!-- Attack the enemy if seen. -->
+            <Condition name="SeeEnemy"/>
+            <Action name="MoveTowardsEnemy"/>
+        </Sequence>
+    </ActiveSelector>
+</BehaviorTree>

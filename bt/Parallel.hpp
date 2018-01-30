@@ -8,8 +8,8 @@
 //  Parallel is a Composite that executes all children at the same time.
 //  
 
-#ifndef Parallel_h
-#define Parallel_h
+#ifndef Parallel_hpp
+#define Parallel_hpp
 
 #include "Composite.hpp"
 
@@ -29,7 +29,7 @@ namespace BT
         Policy m_eFailurePolicy;
         
     public:
-        Parallel(Policy _success, Policy _failure) : m_eSuccessPolicy(_success), m_eFailurePolicy(_failure) { }
+        Parallel(Policy _success, Policy _failure) : m_eSuccessPolicy(_success), m_eFailurePolicy(_failure) { m_sName = "Repeater"; }
         virtual ~Parallel() { }
         virtual Status onUpdate() override
         {
@@ -64,4 +64,4 @@ namespace BT
     };
 }
 
-#endif /* Parallel_h */
+#endif /* Parallel_hpp */

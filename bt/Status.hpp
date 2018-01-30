@@ -6,8 +6,8 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef Status_h
-#define Status_h
+#ifndef Status_hpp
+#define Status_hpp
 
 namespace BT
 {
@@ -21,4 +21,4 @@ namespace BT
     };
 }
 
-#endif /* Status_h */
+#endif /* Status_hpp */

@@ -8,8 +8,8 @@
 //  Composite contains amultiple children.
 // 
 
-#ifndef Composite_h
-#define Composite_h
+#ifndef Composite_hpp
+#define Composite_hpp
 
 #include <vector>
 #include "Behavior.hpp"
@@ -24,8 +24,9 @@ namespace BT
         Behaviors::iterator m_CurrentChild;
         
     public:
-        virtual ~Composite() { }
-        inline void addChild(Behavior* _child) { m_Children.push_back(_child); }
+        Composite() { m_sName = "Composite"; m_Children = std::vector<Behavior*>(); }
+        virtual ~Composite() { m_Children.clear(); }
+        inline virtual void addChild(Behavior* _child) { m_Children.push_back(_child); }
         inline void removeChild(Behavior* _child) { auto it = std::find(m_Children.begin(), m_Children.end(), _child);
             if (it != m_Children.end()) {std::swap(*it, m_Children.back()); m_Children.pop_back();} }
         void clearChildern() { m_Children.clear(); }
@@ -33,4 +34,4 @@ namespace BT
     };
 }
 
-#endif /* Composite_h */
+#endif /* Composite_hpp */

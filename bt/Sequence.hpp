@@ -10,8 +10,8 @@
 //      until one child behavior fails.
 //
 
-#ifndef Sequence_h
-#define Sequence_h
+#ifndef Sequence_hpp
+#define Sequence_hpp
 
 #include "Composite.hpp"
 
@@ -20,6 +20,7 @@ namespace BT
     class Sequence : public Composite
     {
     public:
+        Sequence() { m_sName = "Sequence"; }
         virtual ~Sequence() { }
         virtual Status onUpdate() override
         {
@@ -33,8 +34,8 @@ namespace BT
             }
             return Status::BH_INVALID;
         }
-        inline static Behavior* create() { return new Sequence; }
+        inline static Behavior* create(const BehaviorParams& _params) { return new Sequence; }
     };
 }
 
-#endif /* Sequence_h */
+#endif /* Sequence_hpp */

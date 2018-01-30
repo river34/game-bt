@@ -10,8 +10,8 @@
 //      the fitst one contains conditions to be monitored;
 //      the second one contains actions.
 
-#ifndef Monitor_h
-#define Monitor_h
+#ifndef Monitor_hpp
+#define Monitor_hpp
 
 #include "Parallel.hpp"
 
@@ -20,11 +20,11 @@ namespace BT
     class Monitor : public Parallel
     {
     public:
-        Monitor() :	Parallel(Parallel::PL_REQUIRE_ONE, Parallel::PL_REQUIRE_ONE) { }
+        Monitor() :	Parallel(Parallel::PL_REQUIRE_ONE, Parallel::PL_REQUIRE_ONE) { m_sName = "Monitor"; }
         virtual ~Monitor() { }
         inline void addCondition(Behavior* condition) { m_Children.insert(m_Children.begin(), condition); }
         inline void addAction(Behavior* action) { m_Children.push_back(action); }
     };
 }
 
-#endif /* Monitor_h */
+#endif /* Monitor_hpp */

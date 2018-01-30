@@ -6,8 +6,8 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef Node_h
-#define Node_h
+#ifndef Node_hpp
+#define Node_hpp
 
 #include <vector>
 
@@ -24,4 +24,4 @@ namespace BT
     typedef std::vector<Node> Nodes;
 }
 
-#endif /* Node_h */
+#endif /* Node_hpp */

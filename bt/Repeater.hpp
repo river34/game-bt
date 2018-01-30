@@ -11,10 +11,11 @@
 //      if the child succeeds, it is executed again in the same
 //      update after the reset.
 
-#ifndef Repeat_h
-#define Repeat_h
+#ifndef Repeat_hpp
+#define Repeat_hpp
 
 #include "Decorator.hpp"
+#include <sstream>
 
 namespace BT
 {
@@ -25,8 +26,8 @@ namespace BT
         unsigned int m_iLimit;
         
     public:
-        Repeater() { }
-        Repeater(unsigned int _limit) : m_iLimit(_limit) { }
+        Repeater() { m_sName = "Repeater"; }
+        Repeater(unsigned int _limit) : m_iLimit(_limit) { m_sName = "Repeater"; }
         Repeater(Behavior* _child, unsigned int _limit) : Decorator(_child), m_iLimit(_limit) { }
         virtual ~Repeater() { }
         inline void onInitialize() { m_iCounter = 0; }
@@ -44,9 +45,23 @@ namespace BT
             }
             return Status::BH_INVALID;
         }
-        inline static Behavior* create() { return new Repeater; }
+        inline static Behavior* create(const BehaviorParams& _params)
+        {
+            auto it = _params.find("limit");
+            if (it != _params.end())
+            {
+                std::stringstream s(it->second);
+                unsigned int limit = 0;
+                s >> limit;
+                return new Repeater(limit);
+            }
+            else
+            {
+                return new Repeater;
+            }
+        }
     };
 }
 
 
-#endif /* Repeat_h */
+#endif /* Repeat_hpp */

@@ -6,8 +6,8 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef BehaviorTree_h
-#define BehaviorTree_h
+#ifndef BehaviorTree_hpp
+#define BehaviorTree_hpp
 
 #include <deque>
 #include "Behavior.hpp"
@@ -61,4 +61,4 @@ namespace BT
     };
 }
 
-#endif /* BehaviorTree_h */
+#endif /* BehaviorTree_hpp */

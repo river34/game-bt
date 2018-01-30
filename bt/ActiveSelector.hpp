@@ -8,8 +8,8 @@
 //  ActiveSelector is a Selector that actively rechecks
 //      its children.
 
-#ifndef ActiveSelector_h
-#define ActiveSelector_h
+#ifndef ActiveSelector_hpp
+#define ActiveSelector_hpp
 
 #include "Selector.hpp"
 
@@ -18,6 +18,7 @@ namespace BT
     class ActiveSelector : public Selector
     {
     public:
+        ActiveSelector() { m_sName = "ActiveSelector"; }
         virtual ~ActiveSelector() { }
         inline virtual void onInitialize() override { m_CurrentChild = m_Children.end(); }
         virtual Status onUpdate() override
@@ -31,7 +32,8 @@ namespace BT
             }
             return result;
         }
+        inline static Behavior* create(const BehaviorParams& _params) { return new ActiveSelector; }
     };
 }
 
-#endif /* ActiveSelector_h */
+#endif /* ActiveSelector_hpp */

@@ -6,8 +6,8 @@
 //  Copyright © 2018 River Liu. All rights reserved.
 //
 
-#ifndef Task_h
-#define Task_h
+#ifndef Task_hpp
+#define Task_hpp
 
 #include "Status.hpp"
 
@@ -28,4 +28,4 @@ namespace BT
     };
 }
 
-#endif /* Task_h */
+#endif /* Task_hpp */

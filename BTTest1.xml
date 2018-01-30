@@ -11,19 +11,19 @@
                         <Action id="AttackEnemy"/>
                     </Repeater>
                 </Sequence>
-                <Action id="MoveTowardsPlayer"/>
+                <Action id="MoveToEnemy"/>
             </ActiveSelector>
         </Sequence>
         
         <Sequence> <!-- Search near last known position. -->
             <Condition id="HaveLastKnownPosition"/>
             <Action id="MoveToLastKnownPosition"/>
-            <Action id="LookAround"/>
+            <Action id="Search"/>
         </Sequence>
         
         <Sequence> <!-- Randomly search nearby. -->
             <Action id="MoveToRandomPosition"/>
-            <Action id="LookAround"/>
+            <Action id="Search"/>
         </Sequence>
     </ActiveSelector>
 </BehaviorTree>

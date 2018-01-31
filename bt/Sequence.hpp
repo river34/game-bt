@@ -25,10 +25,10 @@ namespace BT
         virtual ~Sequence() { }
         virtual Status onUpdate(Blackboard* _blackboard) override
         {
-			std::cout << "onUpdate " << m_sName << std::endl;
-            while(true)
+			for (;;)
             {
                 Status status = (*m_CurrentChild)->tick(_blackboard);
+
                 // if one child behavior fails
                 if (status != Status::BH_SUCCESS) return status;
                 // if all children have executed successfully

@@ -23,7 +23,6 @@ namespace BT
         inline void setChild(Behavior* _child) { m_pChild = _child; }
 		Status onUpdate(Blackboard* _blackboard)
 		{
-			std::cout << "onUpdate " << m_sName << " BH_RUNNING" << std::endl;
 			m_pChild->tick(_blackboard);
 			m_pChild->reset();
 			return Status::BH_RUNNING;

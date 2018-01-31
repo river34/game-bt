@@ -21,10 +21,9 @@ namespace BT
         ActiveSelector() : Selector("ActiveSelector") { }
 		ActiveSelector(const std::string& _name) : Selector(_name) { }
         virtual ~ActiveSelector() { }
-        inline virtual void onInitialize(Blackboard* _blackboard) override { std::cout << "onInitialize " << m_sName << std::endl; m_CurrentChild = m_Children.end(); }
+        inline virtual void onInitialize(Blackboard* _blackboard) override { m_CurrentChild = m_Children.end(); }
         virtual Status onUpdate(Blackboard* _blackboard) override
         {
-			std::cout << "onUpdate " << m_sName << std::endl;
             auto prev = m_CurrentChild;
             Selector::onInitialize(_blackboard);
             Status result = Selector::onUpdate(_blackboard);

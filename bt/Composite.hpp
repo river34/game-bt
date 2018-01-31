@@ -31,8 +31,7 @@ namespace BT
         inline void removeChild(Behavior* _child) { auto it = std::find(m_Children.begin(), m_Children.end(), _child);
             if (it != m_Children.end()) {std::swap(*it, m_Children.back()); m_Children.pop_back();} }
         void clearChildern() { m_Children.clear(); }
-		inline virtual void onInitialize(Blackboard* _blackboard) override {
-			std::cout << "onInitialize " << m_sName << std::endl; m_CurrentChild = m_Children.begin(); }
+		inline virtual void onInitialize(Blackboard* _blackboard) override { m_CurrentChild = m_Children.begin(); }
     };
 }
 

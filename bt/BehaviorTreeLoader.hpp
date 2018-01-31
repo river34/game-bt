@@ -70,7 +70,7 @@ namespace BT
             std::cout << root->getName() << std::endl;
 
 			// add root to behavior tree
-			_behaviorTree->start(*root);
+			_behaviorTree->setRoot(*root);
             
             // create behavior tree
             createNodes(_behaviorFactory, root, root_node);

@@ -30,12 +30,12 @@ namespace BT
     public:
         Behavior() : m_eStatus(Status::BH_INVALID), m_sName("Behavior") { }
 		Behavior(const std::string& _name) : m_eStatus(Status::BH_INVALID), m_sName(_name) { }
-        virtual ~Behavior() { m_eStatus = Status::BH_INVALID; }
+        virtual ~Behavior() { }
         Status tick(Blackboard* _blackboard) /* single entry point for updating this behavior */
         {
-			std::cout << "tick " << m_sName << std::endl;
+			std::cout << m_sName << " tick" << std::endl;
 
-            if (m_eStatus == Status::BH_INVALID)
+            if (m_eStatus != Status::BH_RUNNING)
                 onInitialize(_blackboard);
             
             onUpdate(_blackboard);
@@ -49,9 +49,9 @@ namespace BT
         inline bool isTerminated() const { return m_eStatus == Status::BH_SUCCESS || m_eStatus == Status::BH_FAILURE; } /* success or failed */
         inline void reset() { m_eStatus = Status::BH_INVALID; }
         inline void abort() { onTerminate(Status::BH_ABORTED); m_eStatus = Status::BH_ABORTED; }
-        inline virtual void onInitialize(Blackboard* _blackboard) { std::cout << "onInitialize " << m_sName << std::endl; }
-        inline virtual Status onUpdate(Blackboard* _blackboard) { std::cout << "onUpdate " << m_sName << std::endl; return m_eStatus; }
-        inline virtual void onTerminate(Status _status) { std::cout << "onTerminate " << m_sName << std::endl; }
+        inline virtual void onInitialize(Blackboard* _blackboard) { }
+        inline virtual Status onUpdate(Blackboard* _blackboard) { return m_eStatus; }
+        inline virtual void onTerminate(Status _status) { }
         inline std::string getName() { return m_sName; }
         inline static Behavior* create(const BehaviorParams& _params) { return new Behavior; }
     };

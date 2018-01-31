@@ -17,16 +17,20 @@ namespace BT
     class BehaviorTree
     {
     protected:
+		Behavior* m_pRoot;
         std::deque<Behavior*> m_Behaviors;
         
     public:
-        void start(Behavior& bh)
+        void setRoot(Behavior& _root)
         {
-            m_Behaviors.push_front(&bh);
+			m_pRoot = &_root;
         }
         
         void tick(Blackboard* _blackboard)
         {
+			// Insert root.
+			m_Behaviors.push_front(m_pRoot);
+
             // Insert an end-of-update marker into the list of tasks.
             m_Behaviors.push_back(nullptr);
             

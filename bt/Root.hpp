@@ -1,11 +1,11 @@
 //
-//  Decorator.hpp
+//  Root.hpp
 //  GameBT
 //
 //  Created by River Liu on 22/1/2018.
 //  Copyright © 2018 River Liu. All rights reserved.
 //
-//  Decorator contains only one child.
+//  Single entry point.
 //
 
 #ifndef Root_hpp

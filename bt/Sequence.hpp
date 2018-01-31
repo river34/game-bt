@@ -20,13 +20,15 @@ namespace BT
     class Sequence : public Composite
     {
     public:
-        Sequence() { m_sName = "Sequence"; }
+        Sequence() : Composite("Sequence") { }
+		Sequence(const std::string& _name) : Composite(_name) { }
         virtual ~Sequence() { }
-        virtual Status onUpdate() override
+        virtual Status onUpdate(Blackboard* _blackboard) override
         {
+			std::cout << "onUpdate " << m_sName << std::endl;
             while(true)
             {
-                Status status = (*m_CurrentChild)->tick();
+                Status status = (*m_CurrentChild)->tick(_blackboard);
                 // if one child behavior fails
                 if (status != Status::BH_SUCCESS) return status;
                 // if all children have executed successfully

@@ -35,7 +35,9 @@ namespace BT
         }
         Behavior* createInstance(const rapidxml::xml_node<>* node)
         {
-            FactoryMap::iterator it = m_FactoryMap.find(node->name());
+			std::string id = (node->first_attribute("id") == nullptr) ? "" : node->first_attribute("id")->value();
+			std::string name = node->name();
+            FactoryMap::iterator it = m_FactoryMap.find(id + name);
             Behavior::BehaviorParams params = Behavior::BehaviorParams();
             for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
                 if (strcmp(attr->name(), "name")) continue;

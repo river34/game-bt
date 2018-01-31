@@ -29,15 +29,16 @@ namespace BT
         Policy m_eFailurePolicy;
         
     public:
-        Parallel(Policy _success, Policy _failure) : m_eSuccessPolicy(_success), m_eFailurePolicy(_failure) { m_sName = "Repeater"; }
+		Parallel(Policy _success, Policy _failure) : m_eSuccessPolicy(_success), m_eFailurePolicy(_failure), Composite("Parallel") { }
+        Parallel(Policy _success, Policy _failure, const std::string& _name) : m_eSuccessPolicy(_success), m_eFailurePolicy(_failure), Composite(_name){ }
         virtual ~Parallel() { }
-        virtual Status onUpdate() override
+        virtual Status onUpdate(Blackboard* _blackboard) override
         {
             unsigned int iSuccessCount = 0, iFailureCount = 0;
             for (auto it: m_Children)
             {
                 Behavior* behavior = it;
-                if (behavior->isTerminated() == false) behavior->tick();
+                if (behavior->isTerminated() == false) behavior->tick(_blackboard);
                 if (behavior->getStatus() == Status::BH_SUCCESS)
                 {
                     iSuccessCount ++;

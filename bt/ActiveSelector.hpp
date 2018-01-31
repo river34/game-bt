@@ -18,14 +18,16 @@ namespace BT
     class ActiveSelector : public Selector
     {
     public:
-        ActiveSelector() { m_sName = "ActiveSelector"; }
+        ActiveSelector() : Selector("ActiveSelector") { }
+		ActiveSelector(const std::string& _name) : Selector(_name) { }
         virtual ~ActiveSelector() { }
-        inline virtual void onInitialize() override { m_CurrentChild = m_Children.end(); }
-        virtual Status onUpdate() override
+        inline virtual void onInitialize(Blackboard* _blackboard) override { std::cout << "onInitialize " << m_sName << std::endl; m_CurrentChild = m_Children.end(); }
+        virtual Status onUpdate(Blackboard* _blackboard) override
         {
+			std::cout << "onUpdate " << m_sName << std::endl;
             auto prev = m_CurrentChild;
-            Selector::onInitialize();
-            Status result = Selector::onUpdate();
+            Selector::onInitialize(_blackboard);
+            Status result = Selector::onUpdate(_blackboard);
             if (prev != m_Children.end() && prev != m_CurrentChild)
             {
                 abort();

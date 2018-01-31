@@ -19,13 +19,14 @@ namespace BT
     class Selector : public Composite
     {
     public:
-        Selector() { m_sName = "Selector"; }
+        Selector() : Composite("Selector") { }
+		Selector(const std::string& _name) : Composite(_name) { }
         virtual ~Selector() { }
-        virtual Status onUpdate() override
+        virtual Status onUpdate(Blackboard* _blackboard) override
         {
             while(true)
             {
-                Status status = (*m_CurrentChild)->tick();
+                Status status = (*m_CurrentChild)->tick(_blackboard);
                 // if child succeeds or keeps running
                 if (status != Status::BH_FAILURE) return status;
                 // if all children have executed

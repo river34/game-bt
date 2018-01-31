@@ -20,7 +20,8 @@ namespace BT
     class Monitor : public Parallel
     {
     public:
-        Monitor() :	Parallel(Parallel::PL_REQUIRE_ONE, Parallel::PL_REQUIRE_ONE) { m_sName = "Monitor"; }
+		Monitor() : Parallel(Parallel::PL_REQUIRE_ONE, Parallel::PL_REQUIRE_ONE, "Monitor") { }
+		Monitor(const std::string& _name) : Parallel(Parallel::PL_REQUIRE_ONE, Parallel::PL_REQUIRE_ONE, _name) { }
         virtual ~Monitor() { }
         inline void addCondition(Behavior* condition) { m_Children.insert(m_Children.begin(), condition); }
         inline void addAction(Behavior* action) { m_Children.push_back(action); }

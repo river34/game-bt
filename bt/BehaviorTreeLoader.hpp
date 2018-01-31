@@ -36,12 +36,21 @@ namespace BT
     class BehaviorTreeLoader
     {
     public:
-        BehaviorTree* loadBehaviorTree(const std::string& _filepath)
+        void loadBehaviorTree(const std::string& _file, BehaviorTree* _behaviorTree, BehaviorFactory* _behaviorFactory, const bool _isFilepath)
         {
-            std::ifstream theFile ("BTTest2.xml");
-            assert (theFile.is_open());
-            
-            std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
+			std::vector<char> buffer;
+
+			if (_isFilepath == true)
+			{
+				std::ifstream theFile(_file);
+				buffer = std::vector<char>((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
+				std::cout << "Read filepath" << std::endl;
+			}
+			else
+			{
+				buffer = std::vector<char>(_file.begin(), _file.end());
+				std::cout << "Read file as string" << std::endl;
+			}
             buffer.push_back('\0');
             
             std::cout << "File size: " << buffer.size() << "\n";
@@ -55,37 +64,25 @@ namespace BT
             // find the root node
             xml_node<>* root_node = doc.first_node("BehaviorTree");
             
-            // create factory
-            BehaviorFactory* behaviorFactory = new BehaviorFactory;
-            behaviorFactory->registerClass("Repeater", &Repeater::create);
-            behaviorFactory->registerClass("Sequence", &Sequence::create);
-            behaviorFactory->registerClass("ActiveSelector", &ActiveSelector::create);
-            behaviorFactory->registerClass("BehaviorTree", &Root::create);
-            behaviorFactory->registerClass("Action", &Behavior::create);
-            behaviorFactory->registerClass("Condition", &Behavior::create);
-            
-            // create tree
-            BehaviorTree* bt = new BehaviorTree;
-            
             // create root
-            Behavior* root = behaviorFactory->createInstance(root_node);
+            Behavior* root = _behaviorFactory->createInstance(root_node);
             assert (root != nullptr);
             std::cout << root->getName() << std::endl;
+
+			// add root to behavior tree
+			_behaviorTree->start(*root);
             
             // create behavior tree
-            createNodes(behaviorFactory, root, root_node);
-            
-            return bt;
+            createNodes(_behaviorFactory, root, root_node);
         }
         
         void createNodes(BehaviorFactory* _behaviorFactory, Behavior* _behavior, xml_node<>* _node)
         {
             if (_node->first_node())
             {
-                Composite* composite = (Composite*)_behavior;
+                Composite* composite = dynamic_cast<Composite*>(_behavior);
                 if (composite != nullptr)
                 {
-                    std::cout << "It is a composite" << std::endl;
                     // for each child, add to the composite
                     for (xml_node<>* node = _node->first_node(); node; node = node->next_sibling())
                     {
@@ -97,10 +94,9 @@ namespace BT
                     }
                 }
                 
-                Decorator* decorator = (Decorator*)_behavior;
+                Decorator* decorator = dynamic_cast<Decorator*>(_behavior);
                 if (decorator != nullptr)
                 {
-                    std::cout << "It is a decorator" << std::endl;
                     // add child to the decorator
                     xml_node<>* node = _node->first_node();
                     Behavior* child = _behaviorFactory->createInstance(node);

@@ -3,8 +3,8 @@
 <BehaviorTree name="BT_Test_2">
     <ActiveSelector>
         <Sequence> <!-- Attack the enemy if seen. -->
-            <Condition name="SeeEnemy"/>
-            <Action name="MoveTowardsEnemy"/>
+            <Condition id="SeeEnemy"/>
+            <Action id="AttackEnemy"/>
         </Sequence>
     </ActiveSelector>
 </BehaviorTree>

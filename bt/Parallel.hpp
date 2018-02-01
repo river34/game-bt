@@ -42,16 +42,16 @@ namespace BT
                 if (behavior->getStatus() == Status::BH_SUCCESS)
                 {
                     iSuccessCount ++;
-                    if (m_eSuccessPolicy == PL_REQUIRE_ONE) return Status::BH_SUCCESS;
+                    if (m_eSuccessPolicy == PL_REQUIRE_ONE) { return Status::BH_SUCCESS; }
                 }
                 if (behavior->getStatus() == Status::BH_FAILURE)
                 {
                     iFailureCount ++;
-                    if (m_eSuccessPolicy == PL_REQUIRE_ONE) return Status::BH_FAILURE;
+					if (m_eSuccessPolicy == PL_REQUIRE_ONE) { return Status::BH_FAILURE; }
                 }
             }
-            if (m_eSuccessPolicy == PL_REQUIRE_ALL && iSuccessCount == m_Children.size()) return Status::BH_SUCCESS;
-            if (m_eFailurePolicy == PL_REQUIRE_ALL && iFailureCount == m_Children.size()) return Status::BH_FAILURE;
+            if (m_eSuccessPolicy == PL_REQUIRE_ALL && iSuccessCount == m_Children.size()) { return Status::BH_SUCCESS; }
+            if (m_eFailurePolicy == PL_REQUIRE_ALL && iFailureCount == m_Children.size()) { return Status::BH_FAILURE; }
             return Status::BH_RUNNING;
         }
         virtual void onTerminate(Status _statues) override /* immediately terminates all running children */

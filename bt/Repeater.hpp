@@ -42,11 +42,11 @@ namespace BT
             {
                 m_pChild->tick(_blackboard);
                 if (m_pChild->getStatus() == Status::BH_RUNNING) break;
-                if (m_pChild->getStatus() == Status::BH_FAILURE) return Status::BH_FAILURE;
-                if (++m_iCounter == m_iLimit) return Status::BH_SUCCESS;
+                if (m_pChild->getStatus() == Status::BH_FAILURE) { return Status::BH_FAILURE; }
+                if (++m_iCounter == m_iLimit) { return Status::BH_SUCCESS; }
                 m_pChild->reset();
             }
-            return Status::BH_INVALID;
+			return Status::BH_INVALID;
         }
         inline static Behavior* create(const BehaviorParams& _params)
         {

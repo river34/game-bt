@@ -59,7 +59,9 @@ namespace BT
             if (current->getStatus() == Status::BH_RUNNING)
             {
                 m_Behaviors.push_back(current);
+				std::cout << "push_back = " << current->getName() << std::endl;
             }
+			std::cout << "m_Behaviors = " << m_Behaviors.size() << std::endl;
             return true;
         }
     };

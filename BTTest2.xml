@@ -1,10 +1,23 @@
 <?xml version="1.0" ?>
 
 <BehaviorTree name="BT_Test_2">
-    <ActiveSelector>
-        <Sequence> <!-- Attack the enemy if seen. -->
+    <Selector>
+        <Sequence name="FindSequence"> <!-- Attack the enemy if seen. -->
             <Condition id="SeeEnemy"/>
+            <Action id="MoveToEnemy"/>
             <Action id="AttackEnemy"/>
         </Sequence>
-    </ActiveSelector>
+
+      <Sequence name="SearchNearSequence">
+        <!-- Search near last known position. -->
+        <Condition id="HaveLastKnownPosition"/>
+        <Action id="MoveToLastKnownPosition"/>
+        <Action id="MoveToRandomPosition"/>
+      </Sequence>
+
+      <Sequence name="SearchRandomSequence">
+        <!-- Randomly search nearby. -->
+        <Action id="MoveToRandomPosition"/>
+      </Sequence>
+    </Selector>
 </BehaviorTree>

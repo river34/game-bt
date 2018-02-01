@@ -40,7 +40,6 @@ namespace BT
             FactoryMap::iterator it = m_FactoryMap.find(id + name);
             Behavior::BehaviorParams params = Behavior::BehaviorParams();
             for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
-                if (strcmp(attr->name(), "name")) continue;
                 params[attr->name()] = attr->value();
             }
             if (it != m_FactoryMap.end())

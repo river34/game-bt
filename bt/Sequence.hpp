@@ -30,13 +30,21 @@ namespace BT
                 Status status = (*m_CurrentChild)->tick(_blackboard);
 
                 // if one child behavior fails
-                if (status != Status::BH_SUCCESS) return status;
+				if (status != Status::BH_SUCCESS) { return status; }
                 // if all children have executed successfully
-                if (++m_CurrentChild == m_Children.end()) return Status::BH_SUCCESS;
+                if (++m_CurrentChild == m_Children.end()) { return Status::BH_SUCCESS; }
             }
-            return Status::BH_INVALID;
+			return Status::BH_FAILURE;
         }
-        inline static Behavior* create(const BehaviorParams& _params) { return new Sequence; }
+        inline static Behavior* create(const BehaviorParams& _params) 
+		{
+			auto it = _params.find("name");
+			if (it != _params.end())
+			{
+				return new Sequence(it->second);
+			}
+			return new Sequence; 
+		}
     };
 }
 

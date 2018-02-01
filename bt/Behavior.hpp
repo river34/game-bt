@@ -37,12 +37,27 @@ namespace BT
 
             if (m_eStatus != Status::BH_RUNNING)
                 onInitialize(_blackboard);
+
+			if (m_eStatus == Status::BH_FAILURE) std::cout << getName() << " onInitialize BH_FAILURE" << std::endl;
+			if (m_eStatus == Status::BH_SUCCESS) std::cout << getName() << " onInitialize BH_SUCCESS" << std::endl;
+			if (m_eStatus == Status::BH_ABORTED) std::cout << getName() << " onInitialize BH_ABORTED" << std::endl;
+			if (m_eStatus == Status::BH_INVALID) std::cout << getName() << " onInitialize BH_INVALID" << std::endl;
             
-            onUpdate(_blackboard);
+			m_eStatus = onUpdate(_blackboard);
+
+			if (m_eStatus == Status::BH_FAILURE) std::cout << getName() << " onUpdate BH_FAILURE" << std::endl;
+			if (m_eStatus == Status::BH_SUCCESS) std::cout << getName() << " onUpdate BH_SUCCESS" << std::endl;
+			if (m_eStatus == Status::BH_ABORTED) std::cout << getName() << " onUpdate BH_ABORTED" << std::endl;
+			if (m_eStatus == Status::BH_INVALID) std::cout << getName() << " onUpdate BH_INVALID" << std::endl;
             
             if (m_eStatus != Status::BH_RUNNING)
                 onTerminate(m_eStatus);
-            
+
+			if (m_eStatus == Status::BH_FAILURE) std::cout << getName() << " onTerminate BH_FAILURE" << std::endl;
+			if (m_eStatus == Status::BH_SUCCESS) std::cout << getName() << " onTerminate BH_SUCCESS" << std::endl;
+			if (m_eStatus == Status::BH_ABORTED) std::cout << getName() << " onTerminate BH_ABORTED" << std::endl;
+			if (m_eStatus == Status::BH_INVALID) std::cout << getName() << " onTerminate BH_INVALID" << std::endl;
+
             return m_eStatus;
         }
         inline Status getStatus() { return m_eStatus; }

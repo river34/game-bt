@@ -26,12 +26,12 @@ namespace BT
         {
             auto prev = m_CurrentChild;
             Selector::onInitialize(_blackboard);
-            Status result = Selector::onUpdate(_blackboard);
+            Status status = Selector::onUpdate(_blackboard);
             if (prev != m_Children.end() && prev != m_CurrentChild)
             {
-                abort();
+				(*prev)->abort();
             }
-            return result;
+			return status;
         }
         inline static Behavior* create(const BehaviorParams& _params) { return new ActiveSelector; }
     };
